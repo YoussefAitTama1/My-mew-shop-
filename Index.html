@@ -1,0 +1,425 @@
+<style>
+/* ========== Animations ========== */
+@keyframes popupEntry {
+  0% { transform: translateY(50px) scale(0.9); opacity: 0; }
+  80% { transform: translateY(-10px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes buttonPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* ========== Popup Styling ========== */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 320px;
+  animation: popupEntry 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.offer-alert {
+  background: #fff9e6;
+  padding: 12px;
+  border-radius: 10px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.offer-alert p {
+  margin: 0;
+  font-size: 14px;
+  color: #4a2c15;
+  line-height: 1.4;
+}
+
+.offer-alert strong {
+  color: #FF6B35;
+  font-weight: 700;
+}
+
+.popup-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.popup-btn {
+  padding: 14px 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  transition: 0.3s;
+  text-decoration: none;
+  display: block;
+}
+
+.discount-btn {
+  background: #FF6B35;
+  color: white !important;
+  animation: buttonPulse 1.5s infinite;
+}
+
+.normal-btn {
+  background: white;
+  color: #4A2C15 !important;
+  border: 2px solid #FF6B35;
+}
+
+.close-popup {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #4A2C15;
+  padding: 5px;
+}
+
+/* ========== Original Design (Untouched) ========== */
+:root { --primary: #FF6B35; --secondary: #FFF3E9; --accent: #4A2C15; }
+
+@keyframes cardEntrance { 
+  from { opacity: 0; transform: translateY(20px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+body, html { 
+  margin: 0; 
+  padding: 0; 
+  width: 100%; 
+  overflow-x: hidden; 
+  font-family: 'Poppins', sans-serif; 
+}
+
+.loading-screen { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  background: var(--secondary); 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  z-index: 1000; 
+  animation: fadeOut 1s 1.5s forwards; 
+}
+
+@keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+.cat-shop { 
+  background: var(--secondary); 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  min-height: 100vh; 
+}
+
+.cat-header { 
+  background: white; 
+  padding: 15px; 
+  position: sticky; 
+  top: 0; 
+  z-index: 100; 
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+  text-align: center; 
+}
+
+.logo { 
+  width: 100px; 
+  height: 100px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  border: 3px solid var(--primary); 
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+  margin: 0 auto 15px; 
+}
+
+.search-box { 
+  width: 90%; 
+  max-width: 500px; 
+  padding: 12px 20px; 
+  border: 2px solid var(--primary); 
+  border-radius: 25px; 
+  font-size: 14px; 
+  margin: 0 auto 15px; 
+  display: block; 
+  box-sizing: border-box; 
+  transition: all 0.3s ease; 
+}
+
+.categories-nav { 
+  display: flex; 
+  gap: 8px; 
+  padding: 10px 12px; 
+  overflow-x: auto; 
+  scrollbar-width: none; 
+}
+
+.categories-nav::-webkit-scrollbar { display: none; }
+
+.category-btn { 
+  padding: 8px 14px; 
+  border: 2px solid var(--primary); 
+  border-radius: 20px; 
+  background: rgba(255,107,53,0.1); 
+  color: var(--accent); 
+  cursor: pointer; 
+  flex-shrink: 0; 
+  font-size: 12px; 
+  white-space: nowrap; 
+}
+
+.category-btn.active { 
+  background: var(--primary); 
+  color: white; 
+}
+
+.products-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+  gap: 12px; 
+  padding: 12px; 
+}
+
+.product-card { 
+  background: white; 
+  border-radius: 15px; 
+  padding: 12px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+  animation: cardEntrance 0.6s ease-out forwards; 
+  opacity: 0; 
+  margin: 0; 
+  position: relative; 
+}
+
+.product-card.offer::before { 
+  content: "Black Friday✨"; 
+  position: absolute; 
+  top: -10px; 
+  right: -10px; 
+  background: blue; 
+  color: yellow; 
+  padding: 6px 12px; 
+  border-radius: 20px; 
+  font-size: 10px; 
+  font-weight: bold; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+}
+
+.product-image { 
+  width: 100%; 
+  height: 160px; 
+  object-fit: contain; 
+  border-radius: 12px; 
+  margin-bottom: 12px; 
+}
+
+.product-title { 
+  font-size: 14px; 
+  color: var(--accent); 
+  margin: 0 0 8px; 
+}
+
+.product-description { 
+  font-size: 12px; 
+  color: #666; 
+  margin-bottom: 12px; 
+}
+
+.price-tag { 
+  background: white; 
+  color: black; 
+  padding: 4px 8px; 
+  border-radius: 15px; 
+  font-weight: 700; 
+  margin: 10px 0; 
+  display: inline-block; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+}
+
+.action-btn { 
+  background: var(--primary); 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 25px; 
+  width: 100%; 
+  cursor: pointer; 
+  font-weight: 600; 
+  transition: all 0.3s ease; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 8px; 
+}
+
+@media (max-width: 768px) { 
+  .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .product-image { height: 100px; } 
+}
+
+@media (max-width: 480px) { 
+  .products-grid { gap: 6px; padding: 6px; } 
+  .product-image { height: 120px; } 
+}
+</style>
+
+<!-- ================= MAIN PAGE ================= -->
+<div class="loading-screen">
+    <img alt="Loading..." src="https://i.pinimg.com/originals/7b/3a/3d/7b3a3d0f6e5a9a0f6e5a9a0f6e5a9a0f.gif" style="height: 100px; width: 100px;" />
+</div>
+
+<div class="cat-shop">
+    <header class="cat-header">
+        <img alt="Cat Shop Logo" class="logo" src="https://static.vecteezy.com/system/resources/previews/009/208/622/non_2x/simple-minimalist-cartoon-cute-cat-logo-free-vector.jpg" />
+        <input class="search-box" type="text" placeholder="Search products..." />
+    </header>
+
+    <nav class="categories-nav">
+        <button class="category-btn active">All</button>
+        <button class="category-btn">Animals</button>
+        <button class="category-btn">Electronics</button>
+        <button class="category-btn">Clothes</button>
+        <button class="category-btn">Home Products</button>
+    </nav>
+
+    <!-- *********** PRODUCT TEMPLATE START *********** -->
+    <!-- COPY FROM HERE -->
+    <div class="products-grid">
+        <!-- Product 1 -->
+        <div class="product-card offer">
+            <img alt="Premium Cat Food" class="product-image" loading="lazy" src="https://img.kwcdn.com/product/fancy/5131fafd-032a-4e00-a6e3-7abe18661feb.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp" />
+            <h3 class="product-title">lazy susan</h3>
+            <p class="product-description">Smooth rotating surface for easily organizing and serving multiple dishes on the table.</p>
+            <div class="price-tag">36$</div>
+            <button class="action-btn" 
+                    data-discount="https://contentlocked.net/sl/49m9j"
+                    data-normal="https://temu.to/k/uvszt0crraf">
+                🛒 Check Price
+            </button>
+        
+</div>
+        <!-- Product 2 -->
+    <div class="product-card home-products">
+            <img alt="Premium Cat Food" class="product-image" loading="lazy" src="https://c.media-amazon.com/images/I/71rLI0RZFKL._AC_UF894,1000_QL80_FMwebp_.jpg" />
+            <h3 class="product-title">Juicer Joyce</h3>
+            <p class="product-description">Make fresh juice quickly and easily. JuicerJoyce removes pulp for pure, smooth juice!</p>
+            <div class="price-tag">68$</div>
+            <button class="action-btn" 
+                    data-discount="https://contentlocked.net/sl/49m9j"
+                    data-normal="https://temu.to/k/e087ljm9oht">
+                🛒 Check Price
+            </button>
+        </div>
+        <!--product 3 -->
+        <div class="product-card Offer">
+          <img alt="Cuisinart Ice Cream Maker" class="product-image" loading="lazy" src="https://img.kwcdn.com/product/fancy/05b7676a-d531-4932-9057-c5a2e291991a.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp" />
+            <h3 class="product-title">lazy susan</h3>
+            <p class="product-description">Make fresh ice cream at home quickly and easily, homemade ice cream simple and fast.</p>
+            <div class="price-tag">55$</div>
+            <button class="action-btn" 
+                    data-discount="https://contentlocked.net/sl/49m9j"
+                    data-normal="https://temu.to/k/e087ljm9oht">
+                🛒 Check Price
+            </button>
+          
+        </div>
+        <!-- Add more products by copying the above block -->
+        <!-- Replace REPLACE_WITH_DISCOUNT_LINK and REPLACE_WITH_NORMAL_LINK -->
+    </div>
+    <!-- TO HERE -->
+    <!-- *********** PRODUCT TEMPLATE END *********** -->
+</div>
+
+<!-- ================= POPUP ================= -->
+<div class="popup-overlay" id="offerPopup">
+  <div class="popup-content">
+    <div class="close-popup" onclick="closePopup()">×</div>
+    <h3 style="color: #FF6B35; text-align: center; margin: 0 0 15px;">🎁 Special Offer!</h3>
+    
+    <div class="offer-alert">
+      <p><strong>Important!</strong> Complete these steps to get your discount:</p>
+    </div>
+    
+    <div class="popup-buttons">
+      <a href="#" class="popup-btn discount-btn" id="discountLink" target="_blank">
+        🎉 Get big Discount =>(Complete Offer)
+      </a>
+      <a href="#" class="popup-btn normal-btn" id="normalLink" target="_blank">
+        ⚡ Buy Without Discount
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ================= POPUP FUNCTIONALITY =================
+document.querySelectorAll('.action-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const discountLink = e.currentTarget.dataset.discount;
+    const normalLink = e.currentTarget.dataset.normal;
+    
+    document.getElementById('discountLink').href = discountLink;
+    document.getElementById('normalLink').href = normalLink;
+    document.getElementById('offerPopup').style.display = 'flex';
+  });
+});
+
+function closePopup() {
+  document.getElementById('offerPopup').style.display = 'none';
+}
+
+// Close popup when clicking outside
+window.onclick = function(e) {
+  if (e.target == document.getElementById('offerPopup')) closePopup();
+}
+
+// ================= ORIGINAL FUNCTIONALITY =================
+document.querySelectorAll('.category-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const activeCategory = this.textContent.toLowerCase();
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.style.display = (activeCategory === 'all' || card.classList.contains(activeCategory)) ? 'block' : 'none';
+        });
+    });
+});
+
+document.querySelector('.search-box').addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase();
+    const activeCategory = document.querySelector('.category-btn.active').textContent.toLowerCase();
+    
+    document.querySelectorAll('.product-card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(term) && (activeCategory === 'all' || text.includes(activeCategory)) 
+            ? 'block' 
+            : 'none';
+    });
+});
+
+window.addEventListener('load', () => {
+    document.querySelector('.loading-screen').style.display = 'none';
+});
+</script>
